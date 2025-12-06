@@ -57,3 +57,5 @@ Thumbs.db
 # Packaging / Build helpers
 # =========================
 MANIFEST
+
+uv.lock

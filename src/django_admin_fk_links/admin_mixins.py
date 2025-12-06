@@ -16,6 +16,7 @@ class ForeignKeyLinkMixin:
             if (
                 isinstance(item, str)
                 and item in self.get_list_display_foreign_key_links(request)
+                and item not in self.list_editable
             ):
                 result.append(self._build_fk_link_callable(item))
             else:

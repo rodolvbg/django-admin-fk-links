@@ -33,24 +33,22 @@ classifiers = [
 ]
 
 [project.urls]
+Repository = "https://github.com/rodolvbg/django-admin-fk-links"
 Homepage = "https://github.com/rodolvbg/django-admin-fk-links"
 
 [tool.setuptools.packages.find]
 where = ["src"]
 
 [project.optional-dependencies]
-test = [
+tests = [
   "pytest",
   "pytest-django",
 ]
-
 dev = [
   "pre-commit",
   "black",
   "isort",
   "ruff",
-  "pytest",
-  "pytest-django",
 ]
 
 [tool.black]
@@ -65,3 +63,7 @@ line_length = 88
 line-length = 88
 target-version = "py39"
 select = ["E", "F", "I"]
+
+[tool.setuptools]
+platforms = ["OS Independent"]
+license-files = ["LICENSE", "AUTHORS"]
