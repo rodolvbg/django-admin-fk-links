@@ -21,6 +21,10 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install build
 
+      - name: Show project version
+        run: |
+          grep "version" pyproject.toml
+
       - name: Build release distributions
         run: |
           python -m build
