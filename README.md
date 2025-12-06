@@ -43,7 +43,7 @@ The mixin dynamically replaces the fields listed in:
 list_display_foreign_key_links = ("field_name",)
 ```
 
-with callables that render an <a> tag pointing to the related object’s admin change view.
+with callables that render an `<a>` tag pointing to the related object’s admin change view.
 
 It also supports:
 - Sorting via admin_order_field
