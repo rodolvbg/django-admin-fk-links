@@ -1,6 +1,7 @@
 from django.urls import reverse
 from django.utils.html import format_html
 
+
 class ForeignKeyLinkMixin:
 
     list_display_foreign_key_links = ()

@@ -11,8 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [0.1.0] - 2025-12-06
+## [1.0.0] - 2025-12-06
 
 ### Added
-- `ForeignKeyLinkMixin` to render `ForeignKey` fields in `list_display` as clickable links to the related admin change view.
+- `ForeignKeyLinkMixin` to render `ForeignKey` fields in `list_display` on the `ModelAdmin` as clickable links to the related admin change view.
 - Support for default `admin.site` and custom `AdminSite` instances (via `self.admin_site.name`)
