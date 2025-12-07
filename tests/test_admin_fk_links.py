@@ -3,8 +3,9 @@ from django.contrib import admin
 from django.urls import reverse
 
 from django_admin_fk_links import ForeignKeyLinkMixin
-from .core.models import Author, Book
+
 from .core.admin import CustomBookAdmin
+from .core.models import Author, Book
 
 pytestmark = pytest.mark.django_db
 
@@ -15,7 +16,7 @@ def test_list_display_replaces_fk_with_callable_and_keeps_others():
     list_display = book_admin.get_list_display(request=None)
 
     assert "title" in list_display
-    assert "author" not in list_display 
+    assert "author" not in list_display
 
     # 'author' must have been converted to a callable _link
     fk_callables = [
@@ -107,6 +108,7 @@ def test_build_fk_link_callable_with_nonexistent_field_uses_fallback_verbose():
     Branch de excepción en _build_fk_link_callable:
     si el campo no existe, usa verbose fallback y sin admin_order_field.
     """
+
     # Creamos un admin "dummy" con modelo Author y campo inexistente
     class DummyAdmin(ForeignKeyLinkMixin, admin.ModelAdmin):
         list_display = ("id",)
