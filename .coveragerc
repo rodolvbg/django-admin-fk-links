@@ -1,0 +1,8 @@
+[run]
+branch = False
+source = src/django_admin_fk_links
+
+[report]
+omit =
+    */tests/*
+    */migrations/*

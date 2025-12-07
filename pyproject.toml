@@ -43,12 +43,24 @@ where = ["src"]
 tests = [
   "pytest",
   "pytest-django",
+  "coverage",
 ]
 dev = [
   "pre-commit",
   "black",
   "isort",
   "ruff",
+]
+
+[dependency-groups]
+dev = [
+    "black>=23.3.0",
+    "coverage>=7.2.7",
+    "isort>=5.11.5",
+    "pre-commit>=2.21.0",
+    "pytest>=7.4.4",
+    "pytest-django>=4.5.2",
+    "ruff>=0.14.8",
 ]
 
 [tool.black]
@@ -67,3 +79,10 @@ select = ["E", "F", "I"]
 [tool.setuptools]
 platforms = ["OS Independent"]
 license-files = ["LICENSE", "AUTHORS"]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "tests.settings"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+pythonpath = ["."]
+django_find_project = false
