@@ -11,6 +11,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.1.2] - 2026-09-15
+
+### Added
+- Type hints across `ForeignKeyLinkMixin` and a `py.typed` marker for static type checking support.
+- Docstrings for `ForeignKeyLinkMixin`, `_build_fk_link_callable`, and the generated `fk_link` callable.
+- Before/after screenshots of the admin changelist in the README.
+
+---
+
 ## [0.1.1] - 2025-12-06
 
 ### Added

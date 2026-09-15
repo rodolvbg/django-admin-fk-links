@@ -37,6 +37,18 @@ The author column will now be a direct link to its admin change view.
 
 ---
 
+## 🖼️ Screenshots
+
+**Before** — `author` rendered as plain text:
+
+![Book changelist without the mixin](docs/screenshots/book_changelist_before.png)
+
+**After** — `author` rendered as a clickable link to its change view:
+
+![Book changelist with the mixin](docs/screenshots/book_changelist.png)
+
+---
+
 ## ⚙️ How It Works
 The mixin dynamically replaces the fields listed in:
 ```python

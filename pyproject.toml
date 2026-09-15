@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "django-admin-fk-links"
-version = "0.1.1"
+version = "0.1.2"
 description = "Reusable Django admin mixin that turns ForeignKey fields into direct links to their related admin change views."
 readme = "README.md"
 requires-python = ">=3.7"
@@ -38,6 +38,9 @@ Homepage = "https://github.com/rodolvbg/django-admin-fk-links"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+django_admin_fk_links = ["py.typed"]
 
 [project.optional-dependencies]
 tests = [

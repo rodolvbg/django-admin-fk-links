@@ -27,19 +27,19 @@ def test_list_display_replaces_fk_with_callable_and_keeps_others():
     assert len(fk_callables) == 1
 
     fk_callable = fk_callables[0]
-    # short_description must be 'Author' (nombre del campo)
+    # short_description must be 'Author' (field name)
     assert hasattr(fk_callable, "short_description")
     assert fk_callable.short_description.lower() == "author"
     assert getattr(fk_callable, "admin_order_field", None) == "author"
 
 
 def test_list_editable_is_not_converted_to_link():
-    """Campos en list_editable no deben convertirse en enlaces."""
+    """Fields in list_editable must not be converted into links."""
     book_admin = admin.site._registry[Book]
 
     list_display = book_admin.get_list_display(request=None)
 
-    # no debe haber ningún callable cuyo nombre empiece por 'status_'
+    # there must be no callable whose name starts with 'status_'
     assert not any(
         callable(item) and getattr(item, "__name__", "").startswith("status_")
         for item in list_display
@@ -47,7 +47,7 @@ def test_list_editable_is_not_converted_to_link():
 
 
 def test_fk_link_renders_admin_change_url_for_related_object():
-    """El enlace generado debe apuntar al change de Author en el admin."""
+    """The generated link must point to Author's change view in the admin."""
     author = Author.objects.create(name="Clientito")
     book = Book.objects.create(title="Libro", author=author)
 
@@ -70,7 +70,7 @@ def test_fk_link_renders_admin_change_url_for_related_object():
 
 
 def test_fk_link_returns_dash_when_related_is_none():
-    """Si el FK es None, debe devolver '-'."""
+    """If the FK is None, it must return '-'."""
     book = Book.objects.create(title="Libro sin autor", author=None)
 
     book_admin = admin.site._registry[Book]
@@ -83,13 +83,13 @@ def test_fk_link_returns_dash_when_related_is_none():
     )
 
     html = fk_callable(book)
-    assert html == "-"  # branch de 'if not related'
+    assert html == "-"  # 'if not related' branch
 
 
 def test_custom_get_list_display_foreign_key_links_is_used():
     """
-    Si se sobreescribe get_list_display_foreign_key_links,
-    debe usarse en lugar del atributo.
+    If get_list_display_foreign_key_links is overridden,
+    it must be used instead of the attribute.
     """
     model_admin = CustomBookAdmin(Book, admin.site)
 
@@ -105,11 +105,12 @@ def test_custom_get_list_display_foreign_key_links_is_used():
 
 def test_build_fk_link_callable_with_nonexistent_field_uses_fallback_verbose():
     """
-    Branch de excepción en _build_fk_link_callable:
-    si el campo no existe, usa verbose fallback y sin admin_order_field.
+    Exception branch in _build_fk_link_callable:
+    if the field doesn't exist, it uses the verbose fallback without
+    admin_order_field.
     """
 
-    # Creamos un admin "dummy" con modelo Author y campo inexistente
+    # Create a "dummy" admin with the Author model and a nonexistent field
     class DummyAdmin(ForeignKeyLinkMixin, admin.ModelAdmin):
         list_display = ("id",)
 
@@ -117,7 +118,7 @@ def test_build_fk_link_callable_with_nonexistent_field_uses_fallback_verbose():
 
     fn = dummy_admin._build_fk_link_callable("nonexistent_field")
 
-    # short_description = nombre del campo con guiones bajos sustituidos por espacios
+    # short_description = field name with underscores replaced by spaces
     assert fn.short_description == "nonexistent field"
-    # admin_order_field no se define (branch order_field=None)
+    # admin_order_field is not set (order_field=None branch)
     assert not hasattr(fn, "admin_order_field")

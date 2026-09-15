@@ -18,13 +18,13 @@ class BookAdmin(ForeignKeyLinkMixin, admin.ModelAdmin):
 
 class CustomBookAdmin(ForeignKeyLinkMixin, admin.ModelAdmin):
     """
-    Admin NO registrado, sólo para probar override de
-    get_list_display_foreign_key_links y el branch de campo inexistente.
+    Unregistered admin, only used to test overriding
+    get_list_display_foreign_key_links and the nonexistent field branch.
     """
 
     list_display = ("id", "title", "author")
 
     def get_list_display_foreign_key_links(self, request):
-        # aunque el atributo list_display_foreign_key_links estuviera vacío,
-        # este método manda.
+        # even if list_display_foreign_key_links were empty,
+        # this method takes precedence.
         return ("author",)
