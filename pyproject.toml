@@ -93,3 +93,30 @@ run.branch = true
 run.source = [ "django_admin_fk_links" ]
 report.show_missing = true
 report.skip_covered = true
+
+[tool.tox]
+env_list = [
+  "py314-dj60",
+  "py312-dj42",
+  "py312-dj50",
+  "py312-dj60",
+  "py310-dj32",
+  "py310-dj50",
+  "py39-dj22",
+  "py38-dj22",
+  "py38-dj32",
+  "py38-dj42",
+]
+env_run_base.commands = [ [ "pytest" ] ]
+env_run_base.deps = [
+  "pytest",
+  "pytest-django",
+  "pytest-cov",
+  { replace = "if", condition = "factor.dj22", then = [ "django>=2.2,<2.3" ], extend = true },
+  { replace = "if", condition = "factor.dj32", then = [ "django>=3.2,<3.3" ], extend = true },
+  { replace = "if", condition = "factor.dj42", then = [ "django>=4.2,<4.3" ], extend = true },
+  { replace = "if", condition = "factor.dj50", then = [ "django>=5.0,<5.1" ], extend = true },
+  { replace = "if", condition = "factor.dj60", then = [ "django>=6.0,<6.1" ], extend = true },
+]
+env_run_base.package = "wheel"
+env_run_base.wheel_build_env = ".pkg"
