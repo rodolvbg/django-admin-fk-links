@@ -1,5 +1,10 @@
 # django-admin-fk-links
+
+[![Build status](https://github.com/rodolvbg/django-admin-fk-links/actions/workflows/pytest.yml/badge.svg)](https://github.com/rodolvbg/django-admin-fk-links/actions/workflows/pytest.yml)
 [![PyPI version](https://img.shields.io/pypi/v/django-admin-fk-links.svg)](https://pypi.org/project/django-admin-fk-links/)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/django-admin-fk-links)](https://pypi.org/project/django-admin-fk-links/)
+[![PyPI - Django Version](https://img.shields.io/pypi/djversions/django-admin-fk-links)](https://pypi.org/project/django-admin-fk-links/)
+[![Downloads](https://static.pepy.tech/personalized-badge/django-admin-fk-links?period=month&units=international_system&left_color=black&right_color=blue&left_text=Downloads/month)](https://pepy.tech/project/django-admin-fk-links)
 
 Reusable Django admin mixin that turns `ForeignKey` fields into direct clickable links to their related admin change views.
 
