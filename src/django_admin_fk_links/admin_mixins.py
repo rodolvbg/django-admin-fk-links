@@ -1,12 +1,16 @@
 from __future__ import annotations
 
-from typing import Any, Callable, Sequence
+from typing import TYPE_CHECKING
 
 from django.contrib.admin import ModelAdmin
-from django.http import HttpRequest
 from django.urls import reverse
 from django.utils.html import format_html
-from django.utils.safestring import SafeString
+
+if TYPE_CHECKING:
+    from typing import Any, Callable, Sequence
+
+    from django.http import HttpRequest
+    from django.utils.safestring import SafeString
 
 
 class ForeignKeyLinkMixin(ModelAdmin):
