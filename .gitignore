@@ -28,6 +28,7 @@ ENV/
 .coverage
 coverage.xml
 htmlcov/
+.tox/
 
 # =========================
 # Django

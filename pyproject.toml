@@ -38,6 +38,8 @@ optional-dependencies.dev = [
   "pytest-cov>=5",
   "pytest-django>=4.8",
   "ruff>=0.14.8",
+  "tox>=4",
+  "tox-uv>=1",
 ]
 urls.Homepage = "https://github.com/rodolvbg/django-admin-fk-links"
 urls.Repository = "https://github.com/rodolvbg/django-admin-fk-links"
@@ -52,6 +54,8 @@ dev = [
   "pytest-cov>=5",
   "pytest-django>=4.8",
   "ruff>=0.14.8",
+  "tox>=4",
+  "tox-uv>=1",
 ]
 
 [tool.hatch]
