@@ -2,15 +2,25 @@ from __future__ import annotations
 
 from typing import Any, Callable, Sequence
 
+from django.contrib.admin import ModelAdmin
 from django.http import HttpRequest
 from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.safestring import SafeString
 
 
-class ForeignKeyLinkMixin:
+class ForeignKeyLinkMixin(ModelAdmin):
     """ModelAdmin mixin rendering chosen FK fields in list_display as links
-    to their change view."""
+    to their change view.
+
+    Inherits from ``ModelAdmin`` (rather than staying a bare mixin) purely
+    so ``self``/``super()`` are typed for free — ``get_list_display``,
+    ``list_editable``, ``model``, and ``admin_site`` all live there. Meant
+    to sit before ``admin.ModelAdmin`` in a subclass's bases, e.g.
+    ``class BookAdmin(ForeignKeyLinkMixin, admin.ModelAdmin)``; Python's
+    MRO resolves ``super()`` calls to the concrete ``ModelAdmin`` subclass
+    exactly as before, since both share the same underlying class.
+    """
 
     list_display_foreign_key_links: Sequence[str] = ()
 
@@ -57,8 +67,11 @@ class ForeignKeyLinkMixin:
             return format_html('<a href="{}">{}</a>', url, related)
 
         fk_link.__name__ = f"{field_name}_link"
-        fk_link.short_description = verbose
+        # short_description/admin_order_field are Django's own convention
+        # for annotating a list_display callable; there's no stub for
+        # attributes bolted onto a plain function like this.
+        fk_link.short_description = verbose  # type: ignore[attr-defined]
         if order_field:
-            fk_link.admin_order_field = order_field
+            fk_link.admin_order_field = order_field  # type: ignore[attr-defined]
 
         return fk_link

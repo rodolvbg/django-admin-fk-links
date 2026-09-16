@@ -1,26 +1,50 @@
+default_language_version:
+  python: &python-version python3.14
+
 repos:
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v6.0.0
-    hooks:
-      - id: trailing-whitespace
-      - id: end-of-file-fixer
-      - id: check-merge-conflict
-      - id: debug-statements
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: 3e8a8703264a2f4a69428a0aa4dcb512790b2c8c  # frozen: v6.0.0
+  hooks:
+  - id: check-added-large-files
+  - id: check-case-conflict
+  - id: check-json
+  - id: check-merge-conflict
+  - id: check-symlinks
+  - id: check-toml
+  - id: debug-statements
+  - id: end-of-file-fixer
+  - id: trailing-whitespace
 
-  - repo: https://github.com/psf/black
-    rev: 24.10.0
-    hooks:
-      - id: black
-        language_version: python3
+- repo: https://github.com/adamchainz/django-upgrade
+  rev: bdcc9646c249f00ec9781751791e7b75b48b3722  # frozen: 1.31.1
+  hooks:
+  - id: django-upgrade
+    args: [--target-version, "2.2"]
 
-  - repo: https://github.com/pycqa/isort
-    rev: 9.0.1
-    hooks:
-      - id: isort
-        args: ["--profile=black"]
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  rev: 39d9ac5938dadb73df0564a45f163e25ff9fa6e2  # frozen: v0.16.1
+  hooks:
+  - id: ruff-check
+    args: [--fix]
+  - id: ruff-format
 
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.7.2
-    hooks:
-      - id: ruff
-        args: ["--fix"]
+- repo: local
+  hooks:
+  - id: mypy
+    name: mypy
+    entry: mypy
+    language: python
+    additional_dependencies:
+    - mypy>=1.10
+    - django-stubs[compatible-mypy]>=5
+    - django>=2.2
+    - pytest-django>=4.8
+    types: [python]
+    files: ^(src|tests)/
+    pass_filenames: false
+    args: [src/django_admin_fk_links, tests]
+
+- repo: https://github.com/tox-dev/pyproject-fmt
+  rev: d600c142bb19f521ae6a6a345f94a2efd7937759  # frozen: v2.26.0
+  hooks:
+  - id: pyproject-fmt
