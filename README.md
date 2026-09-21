@@ -32,6 +32,7 @@ pip install django-admin-fk-links
 from django.contrib import admin
 from django_admin_fk_links import ForeignKeyLinkMixin
 
+
 @admin.register(Book)
 class BookAdmin(ForeignKeyLinkMixin, admin.ModelAdmin):
     list_display = ("title", "author")
