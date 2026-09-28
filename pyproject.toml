@@ -5,7 +5,9 @@ requires = [ "hatchling" ]
 [project]
 name = "django-admin-fk-links"
 version = "0.1.2"
-description = "Reusable Django admin mixin that turns ForeignKey fields into direct links to their related admin change views."
+description = """\
+  Reusable Django admin mixin that turns ForeignKey fields into direct links to their related admin change views.\
+  """
 readme = "README.md"
 license = "MIT"
 license-files = [ "LICENSE" ]
@@ -27,6 +29,7 @@ classifiers = [
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3.14",
+  "Programming Language :: Python :: 3.15",
 ]
 dependencies = [ "django>=2.2" ]
 optional-dependencies.dev = [
@@ -89,10 +92,10 @@ ini_options.django_find_project = false
 ini_options.DJANGO_SETTINGS_MODULE = "tests.settings"
 
 [tool.coverage]
-run.branch = true
 run.source = [ "django_admin_fk_links" ]
-report.show_missing = true
+run.branch = true
 report.skip_covered = true
+report.show_missing = true
 
 [tool.tox]
 env_list = [
@@ -107,7 +110,8 @@ env_list = [
   "py38-dj32",
   "py38-dj42",
 ]
-env_run_base.commands = [ [ "pytest" ] ]
+env_run_base.package = "wheel"
+env_run_base.wheel_build_env = ".pkg"
 env_run_base.deps = [
   "pytest",
   "pytest-django",
@@ -118,5 +122,4 @@ env_run_base.deps = [
   { replace = "if", condition = "factor.dj50", then = [ "django>=5.0,<5.1" ], extend = true },
   { replace = "if", condition = "factor.dj60", then = [ "django>=6.0,<6.1" ], extend = true },
 ]
-env_run_base.package = "wheel"
-env_run_base.wheel_build_env = ".pkg"
+env_run_base.commands = [ [ "pytest" ] ]
