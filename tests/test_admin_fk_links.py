@@ -1,6 +1,7 @@
 import pytest
 from django.contrib import admin
 from django.urls import reverse
+from django.utils.html import format_html
 
 from django_admin_fk_links import ForeignKeyLinkMixin
 
@@ -122,3 +123,47 @@ def test_build_fk_link_callable_with_nonexistent_field_uses_fallback_verbose():
     assert fn.short_description == "nonexistent field"
     # admin_order_field is not set (order_field=None branch)
     assert not hasattr(fn, "admin_order_field")
+
+
+def _author_link(book_admin, book):
+    fk_link = next(
+        item
+        for item in book_admin.get_list_display(request=None)
+        if callable(item) and getattr(item, "__name__", "") == "author_link"
+    )
+    return fk_link(book)
+
+
+def test_get_foreign_key_link_can_change_the_markup():
+    class LinkWithClassAdmin(ForeignKeyLinkMixin, admin.ModelAdmin):
+        list_display = ("title", "author")
+        list_display_foreign_key_links = ("author",)
+
+        def get_foreign_key_link(self, obj, field_name, related, url):
+            return format_html(
+                '<a class="button" target="_blank" href="{}">{}</a>', url, related
+            )
+
+    author = Author.objects.create(name="Le Guin")
+    book = Book.objects.create(title="Earthsea", author=author)
+    html = _author_link(LinkWithClassAdmin(Book, admin.site), book)
+
+    url = reverse("admin:core_author_change", args=[author.pk])
+    assert html == f'<a class="button" target="_blank" href="{url}">Le Guin</a>'
+
+
+def test_foreign_key_link_template():
+    class TemplateLinkAdmin(ForeignKeyLinkMixin, admin.ModelAdmin):
+        list_display = ("title", "author")
+        list_display_foreign_key_links = ("author",)
+        foreign_key_link_template = "fk_links/link.html"
+
+    author = Author.objects.create(name="Le Guin")
+    book = Book.objects.create(title="Earthsea", author=author)
+    html = _author_link(TemplateLinkAdmin(Book, admin.site), book)
+
+    url = reverse("admin:core_author_change", args=[author.pk])
+    assert html.strip() == (
+        f'<a class="fk-link" href="{url}" data-field="author" '
+        f'title="Earthsea">LE GUIN</a>'
+    )

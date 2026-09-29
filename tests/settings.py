@@ -1,3 +1,5 @@
+from pathlib import Path
+
 SECRET_KEY = "test-secret-key"
 DEBUG = True
 
@@ -22,7 +24,7 @@ MIDDLEWARE = [
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [Path(__file__).parent / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": (

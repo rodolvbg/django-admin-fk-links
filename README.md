@@ -67,6 +67,38 @@ It also supports:
 - Automatic verbose_name resolution
 - Custom AdminSite namespaces
 
+### Customizing the link
+
+Override `get_foreign_key_link()` to change the markup — return safe HTML
+(`format_html()`), since the admin escapes plain strings:
+
+```python
+from django.utils.html import format_html
+
+
+class BookAdmin(ForeignKeyLinkMixin, admin.ModelAdmin):
+    list_display = ("title", "author")
+    list_display_foreign_key_links = ("author",)
+
+    def get_foreign_key_link(self, obj, field_name, related, url):
+        return format_html('<a class="button" target="_blank" href="{}">{}</a>', url, related)
+```
+
+Or render it from a template, with `obj`, `related`, `url` and
+`field_name` in its context:
+
+```python
+class BookAdmin(ForeignKeyLinkMixin, admin.ModelAdmin):
+    list_display = ("title", "author")
+    list_display_foreign_key_links = ("author",)
+    foreign_key_link_template = "admin/book_author_link.html"
+```
+
+```django
+{# templates/admin/book_author_link.html #}
+<a class="fk-link" href="{{ url }}" title="{{ obj }}">{{ related }}</a>
+```
+
 ---
 ## ✅ Compatibility
 - Django 2.2+

@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `get_foreign_key_link(obj, field_name, related, url)` hook and a
+  `foreign_key_link_template` option to change the link's markup.
 - Type checking: `mypy` + `django-stubs`, wired into `pyproject.toml` and
   the pre-commit hooks. `ForeignKeyLinkMixin` now inherits from
   `ModelAdmin` (rather than staying a bare mixin) purely so `self`/`super()`

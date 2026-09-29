@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from django.contrib.admin import ModelAdmin
+from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.html import format_html
 
@@ -27,9 +28,29 @@ class ForeignKeyLinkMixin(ModelAdmin):
     """
 
     list_display_foreign_key_links: Sequence[str] = ()
+    #: Template rendering each link, with ``obj``, ``related``, ``url`` and
+    #: ``field_name`` in its context. ``None`` renders a plain ``<a>`` tag.
+    foreign_key_link_template: str | None = None
 
     def get_list_display_foreign_key_links(self, request: HttpRequest) -> Sequence[str]:
         return self.list_display_foreign_key_links
+
+    def get_foreign_key_link(
+        self, obj: Any, field_name: str, related: Any, url: str
+    ) -> str | SafeString:
+        """HTML of the link from ``obj`` to ``related``'s change view.
+
+        Override to change the markup (a class, a ``target``, an icon, the
+        text…), or set ``foreign_key_link_template`` to render it from a
+        template instead. Return safe HTML (``format_html()``): the admin
+        escapes plain strings.
+        """
+        if self.foreign_key_link_template:
+            return render_to_string(
+                self.foreign_key_link_template,
+                {"obj": obj, "related": related, "url": url, "field_name": field_name},
+            )
+        return format_html('<a href="{}">{}</a>', url, related)
 
     def get_list_display(self, request: HttpRequest) -> list[Any]:
         base = list(super().get_list_display(request))
@@ -68,7 +89,7 @@ class ForeignKeyLinkMixin(ModelAdmin):
                 f"{self.admin_site.name}:{rel_meta.app_label}_{rel_meta.model_name}_change",
                 args=[related.pk],
             )
-            return format_html('<a href="{}">{}</a>', url, related)
+            return self.get_foreign_key_link(obj, field_name, related, url)
 
         fk_link.__name__ = f"{field_name}_link"
         # short_description/admin_order_field are Django's own convention
