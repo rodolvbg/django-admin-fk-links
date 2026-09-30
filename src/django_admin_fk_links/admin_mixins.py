@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from django.apps import apps
 from django.contrib.admin import ModelAdmin
 from django.template.loader import render_to_string
 from django.urls import reverse
@@ -12,6 +13,10 @@ if TYPE_CHECKING:
 
     from django.http import HttpRequest
     from django.utils.safestring import SafeString
+
+
+#: django-unfold's link colors: its reset styles links like the text around.
+UNFOLD_LINK_CLASS = "text-primary-600 dark:text-primary-500"
 
 
 class ForeignKeyLinkMixin(ModelAdmin):
@@ -28,12 +33,21 @@ class ForeignKeyLinkMixin(ModelAdmin):
     """
 
     list_display_foreign_key_links: Sequence[str] = ()
-    #: Template rendering each link, with ``obj``, ``related``, ``url`` and
-    #: ``field_name`` in its context. ``None`` renders a plain ``<a>`` tag.
+    #: Template rendering each link, with ``obj``, ``related``, ``url``,
+    #: ``field_name`` and ``link_class`` in its context. ``None`` renders a
+    #: plain ``<a>`` tag.
     foreign_key_link_template: str | None = None
+    #: CSS class of each link. ``None`` picks the admin theme's: django-unfold's
+    #: link colors when it's installed, else none.
+    foreign_key_link_class: str | None = None
 
     def get_list_display_foreign_key_links(self, request: HttpRequest) -> Sequence[str]:
         return self.list_display_foreign_key_links
+
+    def get_foreign_key_link_class(self) -> str:
+        if self.foreign_key_link_class is not None:
+            return self.foreign_key_link_class
+        return UNFOLD_LINK_CLASS if apps.is_installed("unfold") else ""
 
     def get_foreign_key_link(
         self, obj: Any, field_name: str, related: Any, url: str
@@ -45,10 +59,21 @@ class ForeignKeyLinkMixin(ModelAdmin):
         template instead. Return safe HTML (``format_html()``): the admin
         escapes plain strings.
         """
+        link_class = self.get_foreign_key_link_class()
         if self.foreign_key_link_template:
             return render_to_string(
                 self.foreign_key_link_template,
-                {"obj": obj, "related": related, "url": url, "field_name": field_name},
+                {
+                    "obj": obj,
+                    "related": related,
+                    "url": url,
+                    "field_name": field_name,
+                    "link_class": link_class,
+                },
+            )
+        if link_class:
+            return format_html(
+                '<a href="{}" class="{}">{}</a>', url, link_class, related
             )
         return format_html('<a href="{}">{}</a>', url, related)
 

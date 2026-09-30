@@ -167,3 +167,35 @@ def test_foreign_key_link_template():
         f'<a class="fk-link" href="{url}" data-field="author" '
         f'title="Earthsea">LE GUIN</a>'
     )
+
+
+def test_link_class():
+    from unittest import mock
+
+    from django_admin_fk_links.admin_mixins import UNFOLD_LINK_CLASS
+
+    author = Author.objects.create(name="Le Guin")
+    book = Book.objects.create(title="Earthsea", author=author)
+    url = reverse("admin:core_author_change", args=[author.pk])
+    installed = "django_admin_fk_links.admin_mixins.apps.is_installed"
+
+    class BookLinkAdmin(ForeignKeyLinkMixin, admin.ModelAdmin):
+        list_display = ("title", "author")
+        list_display_foreign_key_links = ("author",)
+
+    with mock.patch(installed, return_value=False):
+        assert _author_link(BookLinkAdmin(Book, admin.site), book) == (
+            f'<a href="{url}">Le Guin</a>'
+        )
+    with mock.patch(installed, side_effect=lambda app: app == "unfold"):
+        assert _author_link(BookLinkAdmin(Book, admin.site), book) == (
+            f'<a href="{url}" class="{UNFOLD_LINK_CLASS}">Le Guin</a>'
+        )
+        BookLinkAdmin.foreign_key_link_class = ""
+        assert _author_link(BookLinkAdmin(Book, admin.site), book) == (
+            f'<a href="{url}">Le Guin</a>'
+        )
+    BookLinkAdmin.foreign_key_link_class = "fk"
+    assert _author_link(BookLinkAdmin(Book, admin.site), book) == (
+        f'<a href="{url}" class="fk">Le Guin</a>'
+    )

@@ -84,8 +84,8 @@ class BookAdmin(ForeignKeyLinkMixin, admin.ModelAdmin):
         return format_html('<a class="button" target="_blank" href="{}">{}</a>', url, related)
 ```
 
-Or render it from a template, with `obj`, `related`, `url` and
-`field_name` in its context:
+Or render it from a template, with `obj`, `related`, `url`, `field_name`
+and `link_class` in its context:
 
 ```python
 class BookAdmin(ForeignKeyLinkMixin, admin.ModelAdmin):
@@ -98,6 +98,14 @@ class BookAdmin(ForeignKeyLinkMixin, admin.ModelAdmin):
 {# templates/admin/book_author_link.html #}
 <a class="fk-link" href="{{ url }}" title="{{ obj }}">{{ related }}</a>
 ```
+
+To only add a CSS class, set `foreign_key_link_class = "my-link"`.
+
+---
+## 🎨 Themes
+
+- [django-unfold](docs/themes/unfold.md): works as it is, with Unfold's
+  link colors.
 
 ---
 ## ✅ Compatibility

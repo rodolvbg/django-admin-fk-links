@@ -48,6 +48,7 @@ urls.Repository = "https://github.com/rodolvbg/django-admin-fk-links"
 dev = [
   "coverage[toml]>=7.4",
   "django-stubs[compatible-mypy]>=5",
+  "django-unfold>=0.108; python_version>='3.12'",
   "mypy>=1.10",
   "pre-commit>=4",
   "pytest>=8",
