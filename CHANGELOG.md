@@ -7,13 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [Unreleased]
+## [0.1.3] - 2026-10-05
 
 ### Added
 
 - `foreign_key_link_class`: a CSS class for the links; by default,
   django-unfold's link colors when it's installed.
-
 - `get_foreign_key_link(obj, field_name, related, url)` hook and a
   `foreign_key_link_template` option to change the link's markup.
 - Type checking: `mypy` + `django-stubs`, wired into `pyproject.toml` and

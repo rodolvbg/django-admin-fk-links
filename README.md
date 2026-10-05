@@ -46,11 +46,11 @@ The author column will now be a direct link to its admin change view.
 
 **Before** — `author` rendered as plain text:
 
-![Book changelist without the mixin](docs/screenshots/book_changelist_before.png)
+![Book changelist without the mixin](https://github.com/rodolvbg/django-admin-fk-links/blob/master/docs/screenshots/book_changelist_before.png)
 
 **After** — `author` rendered as a clickable link to its change view:
 
-![Book changelist with the mixin](docs/screenshots/book_changelist.png)
+![Book changelist with the mixin](https://github.com/rodolvbg/django-admin-fk-links/blob/master/docs/screenshots/book_changelist.png)
 
 ---
 
@@ -104,7 +104,7 @@ To only add a CSS class, set `foreign_key_link_class = "my-link"`.
 ---
 ## 🎨 Themes
 
-- [django-unfold](docs/themes/unfold.md): works as it is, with Unfold's
+- [django-unfold](https://github.com/rodolvbg/django-admin-fk-links/blob/master/docs/themes/unfold.md): works as it is, with Unfold's
   link colors.
 
 ---
