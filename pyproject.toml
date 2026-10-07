@@ -1,12 +1,11 @@
 [build-system]
 build-backend = "hatchling.build"
-requires = [ "hatchling" ]
+requires = [ "hatch-fancy-pypi-readme", "hatchling" ]
 
 [project]
 name = "django-admin-fk-links"
-version = "0.1.3"
+version = "0.1.4"
 description = "Reusable Django admin mixin that turns ForeignKey fields into direct links to their related admin change views."
-readme = "README.md"
 license = "MIT"
 license-files = [ "LICENSE" ]
 authors = [ { name = "Rodolfo Valentín Becerra García", email = "rodolvbg@gmail.com" } ]
@@ -28,6 +27,7 @@ classifiers = [
   "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3.14",
 ]
+dynamic = [ "readme" ]
 dependencies = [ "django>=2.2" ]
 optional-dependencies.dev = [
   "coverage[toml]>=7.4",
@@ -60,7 +60,20 @@ dev = [
 ]
 
 [tool.hatch]
+# PyPI's description: the README with its relative links (images, docs)
+# made absolute, so they work outside GitHub too. HEAD is the repo's
+# default branch, whatever its name.
+metadata.hooks.fancy-pypi-readme.content-type = "text/markdown"
+metadata.hooks.fancy-pypi-readme.fragments = [ { path = "README.md" } ]
 build.targets.wheel.packages = [ "src/django_admin_fk_links" ]
+
+[[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
+pattern = '\]\((docs/[^)\s]+\.(?:png|jpe?g|gif|svg|webp))\)'
+replacement = '](https://raw.githubusercontent.com/rodolvbg/django-admin-fk-links/HEAD/\1)'
+
+[[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
+pattern = '\]\(((?:docs/|CHANGELOG|CONTRIBUTING|LICENSE)[^)\s]*)\)'
+replacement = '](https://github.com/rodolvbg/django-admin-fk-links/blob/HEAD/\1)'
 
 [tool.uv]
 environments = [ "python_version >= '3.10'" ]

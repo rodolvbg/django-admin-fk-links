@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.1.4] - 2026-10-07
+
+### Fixed
+
+- The README's screenshots and links on PyPI: the README keeps relative
+  paths, made absolute in the package's description when it is built
+  (`hatch-fancy-pypi-readme`).
+
+---
+
 ## [0.1.3] - 2026-10-05
 
 ### Added
