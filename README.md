@@ -32,6 +32,7 @@ pip install django-admin-fk-links
 from django.contrib import admin
 from django_admin_fk_links import ForeignKeyLinkMixin
 
+
 @admin.register(Book)
 class BookAdmin(ForeignKeyLinkMixin, admin.ModelAdmin):
     list_display = ("title", "author")
@@ -81,7 +82,9 @@ class BookAdmin(ForeignKeyLinkMixin, admin.ModelAdmin):
     list_display_foreign_key_links = ("author",)
 
     def get_foreign_key_link(self, obj, field_name, related, url):
-        return format_html('<a class="button" target="_blank" href="{}">{}</a>', url, related)
+        return format_html(
+            '<a class="button" target="_blank" href="{}">{}</a>', url, related
+        )
 ```
 
 Or render it from a template, with `obj`, `related`, `url`, `field_name`
