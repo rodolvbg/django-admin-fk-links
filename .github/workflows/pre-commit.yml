@@ -16,11 +16,13 @@ jobs:
         with:
           enable-cache: true
 
+      # The hooks run on python3.14 (default_language_version), found
+      # through the venv's bin on PATH under `uv run`.
       - name: Set up Python
-        run: uv python install
+        run: uv python install 3.14
 
       - name: Install dependencies
-        run: uv sync
+        run: uv sync --python 3.14
 
       - name: Run pre-commit
         run: uv run pre-commit run --all-files
