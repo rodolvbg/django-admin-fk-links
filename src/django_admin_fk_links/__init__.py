@@ -9,5 +9,4 @@ raise ImportError(
     "'django_admin_tables' in INSTALLED_APPS, and import ForeignKeyLinkMixin "
     "(or AdminTablesMixin) from django_admin_tables: "
     "https://github.com/rodolvbg/django-admin-tables"
-    "#migrating-from-django-admin-radio-select-or-django-admin-fk-links"
 )
