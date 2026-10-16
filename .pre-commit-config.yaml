@@ -37,7 +37,8 @@ repos:
     additional_dependencies:
     - mypy>=1.10
     - django-stubs[compatible-mypy]>=5
-    - django>=2.2
+    - django>=4.2
+    - django-admin-rows>=0.1
     - pytest-django>=4.8
     types: [python]
     files: ^(src|tests)/

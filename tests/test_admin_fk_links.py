@@ -177,7 +177,7 @@ def test_link_class():
     author = Author.objects.create(name="Le Guin")
     book = Book.objects.create(title="Earthsea", author=author)
     url = reverse("admin:core_author_change", args=[author.pk])
-    installed = "django_admin_fk_links.admin_mixins.apps.is_installed"
+    installed = "django_admin_rows.fk_links.mixins.apps.is_installed"
 
     class BookLinkAdmin(ForeignKeyLinkMixin, admin.ModelAdmin):
         list_display = ("title", "author")

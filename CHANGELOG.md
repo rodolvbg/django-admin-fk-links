@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.1.5] - Unreleased
+
+### Changed
+
+- django-admin-fk-links is now part of
+  [django-admin-rows](https://github.com/rodolvbg/django-admin-rows). This
+  release depends on it and re-exports `ForeignKeyLinkMixin` (and
+  `admin_mixins`) from it, with a `DeprecationWarning`; it gets no new
+  features.
+- Requires Django 4.2+ and Python 3.10+, like django-admin-rows.
+
+---
+
 ## [0.1.4] - 2026-10-07
 
 ### Fixed

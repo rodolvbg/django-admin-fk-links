@@ -4,23 +4,22 @@ requires = [ "hatch-fancy-pypi-readme", "hatchling" ]
 
 [project]
 name = "django-admin-fk-links"
-version = "0.1.4"
-description = "Reusable Django admin mixin that turns ForeignKey fields into direct links to their related admin change views."
+version = "0.1.5"
+description = "Moved to django-admin-rows: this release only keeps the old imports working."
 license = "MIT"
 license-files = [ "LICENSE" ]
 authors = [ { name = "Rodolfo Valentín Becerra García", email = "rodolvbg@gmail.com" } ]
-requires-python = ">=3.7"
+requires-python = ">=3.10"
 classifiers = [
+  "Development Status :: 7 - Inactive",
   "Framework :: Django",
-  "Framework :: Django :: 2.2",
-  "Framework :: Django :: 3.2",
   "Framework :: Django :: 4.2",
   "Framework :: Django :: 5.0",
+  "Framework :: Django :: 5.1",
+  "Framework :: Django :: 5.2",
   "Framework :: Django :: 6.0",
+  "Framework :: Django :: 6.1",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.7",
-  "Programming Language :: Python :: 3.8",
-  "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
@@ -28,7 +27,7 @@ classifiers = [
   "Programming Language :: Python :: 3.14",
 ]
 dynamic = [ "readme" ]
-dependencies = [ "django>=2.2" ]
+dependencies = [ "django>=4.2", "django-admin-rows>=0.1" ]
 optional-dependencies.dev = [
   "coverage[toml]>=7.4",
   "django-stubs[compatible-mypy]>=5",
@@ -79,7 +78,7 @@ replacement = '](https://github.com/rodolvbg/django-admin-fk-links/blob/HEAD/\1)
 environments = [ "python_version >= '3.10'" ]
 
 [tool.ruff]
-target-version = "py37"
+target-version = "py310"
 line-length = 88
 extend-exclude = [ "**/migrations/*.py" ]
 lint.select = [ "B", "DJ", "E", "F", "I", "UP" ]
@@ -110,27 +109,26 @@ report.skip_covered = true
 
 [tool.tox]
 env_list = [
+  "py314-dj52",
   "py314-dj60",
+  "py314-dj61",
+  "py313-dj51",
   "py312-dj42",
   "py312-dj50",
-  "py312-dj60",
-  "py310-dj32",
-  "py310-dj50",
-  "py39-dj22",
-  "py38-dj22",
-  "py38-dj32",
-  "py38-dj42",
+  "py310-dj42",
+  "py310-dj52",
 ]
 env_run_base.commands = [ [ "pytest" ] ]
 env_run_base.deps = [
   "pytest",
   "pytest-django",
   "pytest-cov",
-  { replace = "if", condition = "factor.dj22", then = [ "django>=2.2,<2.3" ], extend = true },
-  { replace = "if", condition = "factor.dj32", then = [ "django>=3.2,<3.3" ], extend = true },
   { replace = "if", condition = "factor.dj42", then = [ "django>=4.2,<4.3" ], extend = true },
   { replace = "if", condition = "factor.dj50", then = [ "django>=5.0,<5.1" ], extend = true },
+  { replace = "if", condition = "factor.dj51", then = [ "django>=5.1,<5.2" ], extend = true },
+  { replace = "if", condition = "factor.dj52", then = [ "django>=5.2,<5.3" ], extend = true },
   { replace = "if", condition = "factor.dj60", then = [ "django>=6.0,<6.1" ], extend = true },
+  { replace = "if", condition = "factor.dj61", then = [ "django>=6.1,<6.2" ], extend = true },
 ]
 env_run_base.package = "wheel"
 env_run_base.wheel_build_env = ".pkg"
