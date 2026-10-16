@@ -1,20 +1,13 @@
-"""django-admin-fk-links is now part of django-admin-rows.
+"""django-admin-fk-links is now part of django-admin-tables.
 
-This package only keeps the old imports working: use ``django_admin_rows``
-(``from django_admin_rows import ForeignKeyLinkMixin``) instead.
+This last release has no code: install django-admin-tables instead.
 """
 
-import warnings
-
-from django_admin_rows.fk_links import ForeignKeyLinkMixin
-
-warnings.warn(
-    "django-admin-fk-links is now part of django-admin-rows: install "
-    "django-admin-rows and import from django_admin_rows instead.",
-    DeprecationWarning,
-    stacklevel=2,
+raise ImportError(
+    "django-admin-fk-links is now part of django-admin-tables, and this last "
+    "release has no code. Uninstall it, install django-admin-tables, put "
+    "'django_admin_tables' in INSTALLED_APPS, and import ForeignKeyLinkMixin "
+    "(or AdminTablesMixin) from django_admin_tables: "
+    "https://github.com/rodolvbg/django-admin-tables"
+    "#migrating-from-django-admin-radio-select-or-django-admin-fk-links"
 )
-
-__all__ = ["ForeignKeyLinkMixin"]
-
-__version__ = "0.1.5"
