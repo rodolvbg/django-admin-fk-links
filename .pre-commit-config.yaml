@@ -16,13 +16,13 @@ repos:
   - id: trailing-whitespace
 
 - repo: https://github.com/astral-sh/ruff-pre-commit
-  rev: 39d9ac5938dadb73df0564a45f163e25ff9fa6e2  # frozen: v0.16.1
+  rev: 9026c9127e153371d7a78dfcb0c45ae2046a3d10  # frozen: v0.17.6
   hooks:
   - id: ruff-check
     args: [--fix]
   - id: ruff-format
 
 - repo: https://github.com/tox-dev/pyproject-fmt
-  rev: d600c142bb19f521ae6a6a345f94a2efd7937759  # frozen: v2.26.0
+  rev: 02ef6d1c28994054a843e58604e1a343faa42987  # frozen: v2.31.2
   hooks:
   - id: pyproject-fmt
